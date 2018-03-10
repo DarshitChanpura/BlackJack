@@ -51,8 +51,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :blackjack, Blackjack.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "blackjack",
+  password: "12345678",
   database: "blackjack_dev",
   hostname: "localhost",
   pool_size: 10

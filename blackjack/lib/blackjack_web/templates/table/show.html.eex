@@ -1,0 +1,23 @@
+<h2>Show Table</h2>
+
+<ul>
+
+  <li>
+    <strong>Tablename:</strong>
+    <%= @table.tableName %>
+  </li>
+
+  <li>
+    <strong>Playercount:</strong>
+    <%= @table.playerCount %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @table.status %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: table_path(@conn, :edit, @table) %></span>
+<span><%= link "Back", to: table_path(@conn, :index) %></span>
