@@ -101,4 +101,100 @@ defmodule Blackjack.Games do
   def change_table(%Table{} = table) do
     Table.changeset(table, %{})
   end
+
+  alias Blackjack.Games.GameLog
+
+  @doc """
+  Returns the list of gamelog.
+
+  ## Examples
+
+      iex> list_gamelog()
+      [%GameLog{}, ...]
+
+  """
+  def list_gamelog do
+    Repo.all(GameLog)
+  end
+
+  @doc """
+  Gets a single game_log.
+
+  Raises `Ecto.NoResultsError` if the Game log does not exist.
+
+  ## Examples
+
+      iex> get_game_log!(123)
+      %GameLog{}
+
+      iex> get_game_log!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_game_log!(id), do: Repo.get!(GameLog, id)
+
+  @doc """
+  Creates a game_log.
+
+  ## Examples
+
+      iex> create_game_log(%{field: value})
+      {:ok, %GameLog{}}
+
+      iex> create_game_log(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_game_log(attrs \\ %{}) do
+    %GameLog{}
+    |> GameLog.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a game_log.
+
+  ## Examples
+
+      iex> update_game_log(game_log, %{field: new_value})
+      {:ok, %GameLog{}}
+
+      iex> update_game_log(game_log, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_game_log(%GameLog{} = game_log, attrs) do
+    game_log
+    |> GameLog.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a GameLog.
+
+  ## Examples
+
+      iex> delete_game_log(game_log)
+      {:ok, %GameLog{}}
+
+      iex> delete_game_log(game_log)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_game_log(%GameLog{} = game_log) do
+    Repo.delete(game_log)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking game_log changes.
+
+  ## Examples
+
+      iex> change_game_log(game_log)
+      %Ecto.Changeset{source: %GameLog{}}
+
+  """
+  def change_game_log(%GameLog{} = game_log) do
+    GameLog.changeset(game_log, %{})
+  end
 end

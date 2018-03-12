@@ -1,0 +1,26 @@
+<h2>Listing Gamelog</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Status</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for game_log <- @gamelog do %>
+    <tr>
+      <td><%= game_log.status %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: game_log_path(@conn, :show, game_log), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: game_log_path(@conn, :edit, game_log), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: game_log_path(@conn, :delete, game_log), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Game log", to: game_log_path(@conn, :new) %></span>

@@ -1,0 +1,13 @@
+<h2>Show Game log</h2>
+
+<ul>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @game_log.status %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: game_log_path(@conn, :edit, @game_log) %></span>
+<span><%= link "Back", to: game_log_path(@conn, :index) %></span>

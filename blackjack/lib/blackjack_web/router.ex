@@ -31,6 +31,7 @@ defmodule BlackjackWeb.Router do
     get "/lobby", PageController, :lobby
     resources "/users", UserController
     resources "/tables", TableController
+    resources "/gamelog", GameLogController
 
     post "/session", SessionController, :create
     delete "/session", SessionController, :delete

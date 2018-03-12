@@ -3,6 +3,7 @@ defmodule BlackjackWeb.UserSocket do
 
   ## Channels
   # channel "room:*", BlackjackWeb.RoomChannel
+  channel "games:*", BlackjackWeb.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

@@ -19,3 +19,29 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+
+import socket from "./socket"
+
+import run_game from "./memory";
+
+function init() {
+  let root = document.getElementById('game');
+
+
+  if(root){
+  // Now that you are connected, you can join channels with a topic:
+    let channel = socket.channel("games:" + window.gameName, {});
+    run_game(root,channel);
+  }
+else{
+  $("#joinGame").click(function() {
+
+      document.getElementById("gameLink").setAttribute("href", "/game/"+$("#playerName").val());
+
+    });
+}
+}
+
+// Use jQuery to delay until page loaded.
+$(init);
