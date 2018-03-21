@@ -1,38 +1,42 @@
-<h1>Table List</h1>
-<div class="table">
-<div class="row">
-  <div class="col">
-    <strong>TableName</strong>
+
+<div id="lobby-bg">
+  <h1>Table List</h1>
+  <div class="table">
+  <div class="row">
+    <div class="col">
+      <strong>TableName</strong>
+    </div>
+    <div class="col">
+      <strong>PlayerCount</strong>
+    </div>
+    <div class="col">
+      <strong>Status</strong>
+    </div>
+    <div class="col">
+    </div>
   </div>
-  <div class="col">
-    <strong>PlayerCount</strong>
+  <%= Enum.map @tables, fn table -> %>
+  <div class="row">
+    <div class="col">
+      <%= table.tableName %>
+    </div>
+    <div class="col">
+      <%= table.playerCount %>
+    </div>
+    <div class="col">
+      <%= table.status %>
+    </div>
+
+    <div class="col">
+          <button class="timespent-button btn btn-secondary btn-xs"
+              data-table-id="<%= table.id %>"
+              data-table-status="<%= table.status %>"
+              data-task-playercount="<%= table.playerCount %>">
+              Join
+      </button>
+    </div>
   </div>
-  <div class="col">
-    <strong>Status</strong>
-  </div>
-  <div class="col">
-  </div>
-</div>
-<%= Enum.map @tables, fn table -> %>
-<div class="row">
-  <div class="col">
-    <%= table.tableName %>
-  </div>
-  <div class="col">
-    <%= table.playerCount %>
-  </div>
-  <div class="col">
-    <%= table.status %>
+  <% end %>
   </div>
 
-  <div class="col">
-        <button class="timespent-button btn btn-secondary btn-xs"
-            data-table-id="<%= table.id %>"
-            data-table-status="<%= table.status %>"
-            data-task-playercount="<%= table.playerCount %>">
-            Join
-    </button>
-  </div>
-</div>
-<% end %>
 </div>

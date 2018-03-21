@@ -23,12 +23,25 @@ import "phoenix_html"
 
 import socket from "./socket"
 
-import run_game from "./memory";
+//import run_game from "./memory";
 
 function init() {
-  let root = document.getElementById('game');
+//Modal jQuery for Landing page
+let modal = document.getElementById('frm-modal');
+if(modal)
+{alert("adasd");
+  setTimeout(function(){
+    modal.style.display = "block";
+  },2000);
 
-
+  window.onclick = function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
+}
+  ////////////////////////////////////////////////
+  /*let root = document.getElementById('game');
   if(root){
   // Now that you are connected, you can join channels with a topic:
     let channel = socket.channel("games:" + window.gameName, {});
@@ -40,7 +53,7 @@ else{
       document.getElementById("gameLink").setAttribute("href", "/game/"+$("#playerName").val());
 
     });
-}
+}*/
 }
 
 // Use jQuery to delay until page loaded.
