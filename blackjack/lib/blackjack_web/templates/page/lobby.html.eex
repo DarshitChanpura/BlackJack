@@ -1,5 +1,5 @@
 
-<div id="lobby-bg">
+<div id="lobby-bg" style="background: url(<%= static_path(@conn, "/css/lobby.jpg") %>);">
   <h1>Table List</h1>
   <div class="table">
   <div class="row">

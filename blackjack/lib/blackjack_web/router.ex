@@ -27,6 +27,8 @@ defmodule BlackjackWeb.Router do
   scope "/", BlackjackWeb do
     pipe_through :browser # Use the default browser stack
 
+
+
     get "/", PageController, :index
     get "/lobby", PageController, :lobby
     resources "/users", UserController

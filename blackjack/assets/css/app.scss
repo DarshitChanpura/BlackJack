@@ -4,17 +4,18 @@
 
 
 #landing-bg{
-  background-image: url("../static/landing.jpg");
+  //background: "<%= static_path(@conn,'landing.jpg') %>";
+  //background-color: red;
   width:100%;
   height: 100%;
 }
 #lobby-bg{
-  background-image: url("../static/landing.jpg");
+  background-image: url("/lobby.jpg");
   width:100%;
   height: 100%;
 }
 #game-log-bg{
-  background-image: url("../static/TableBG.jpg");
+  background-image: url("/TableBG.jpg");
   width:100%;
   height: 100%;
 }

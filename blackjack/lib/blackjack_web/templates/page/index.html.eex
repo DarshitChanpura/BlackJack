@@ -1,15 +1,15 @@
-<div id="landing-bg">
+<div id="landing-bg" style="background: url(<%= static_path(@conn, "/css/landing.jpg") %>);">
   <div class="row">
     <div class="col">
-      <h1>BlackJack</h1>
+      <h1 style="color:white;">BlackJack</h1>
       <%= form_tag("/session", method: :post) do %>
-        <div class="form-group" id="landing-modal">
-          Email
-          <input type="email" name="email" placeholder="xx@example.com">
-        </div>
+        <div class="form-group" id="landing-modal" style="padding-top:12em;">
+        <p style="color:white;">  Email&nbsp;&nbsp;&nbsp;
+         <input type="email" name="email" placeholder="xx@example.com"></p>
         <div class="form-group">
-          <button class="btn btn-primary">Log In</button>
+          <button class="btn btn-primary">Log In</button>  &nbsp;&nbsp;|| &nbsp;
           <%= link "Register", to: user_path(@conn, :new) %>
+        </div>
         </div>
       <% end %>
     </div>

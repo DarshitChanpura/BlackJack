@@ -27,12 +27,15 @@ import socket from "./socket"
 
 function init() {
 //Modal jQuery for Landing page
-let modal = document.getElementById('frm-modal');
+let modal = document.getElementById('landing-modal');
+modal.style.display="none";
+//alert(modal);
 if(modal)
-{alert("adasd");
+{
+  //alert("adasd");
   setTimeout(function(){
     modal.style.display = "block";
-  },2000);
+  },1000);
 
   window.onclick = function(event) {
       if (event.target == modal) {
