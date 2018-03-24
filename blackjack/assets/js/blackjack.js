@@ -18,7 +18,7 @@ class Blackjack extends React.Component {
     // this.isMatch = this.isMatch.bind(this);
     // this.reset = this.reset.bind(this);
     this.channel=props.channel;
-
+    this.updateToken = this.updateToken.bind(this);
     this.state = {
       cards: [],
       token: 1,
@@ -71,13 +71,22 @@ createState(state1){
   // update score
   if(parseInt(cardVal)%13 >= 10 || parseInt(cardVal)%13 == 0)
   {
-    alert(parseInt(cardVal));
     newscore=newscore+10;
   }else{
     newscore = newscore + parseInt(cardVal)%13;
   }
   tP[playerID - 1].score=newscore;
 
+  if(newscore>21){
+    alert("Busted! You Lose!!!");
+    tP[playerID - 1].inPlay="no";
+    tP[playerID - 1].cardDealt=[];
+    tP[playerID - 1].score=0;
+    this.setState(
+      {tableProgress: tP}
+    );
+    this.updateToken(state);
+  }
   var updatedCards = this.state.cards.filter(function(card){
     return card.character != cardVal;
   });
@@ -87,7 +96,7 @@ createState(state1){
     { cards: updatedCards,
       tableProgress: tP}
   );
-
+this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
   }//handleHIT() ends
 
   handleStay(state,event){
@@ -95,21 +104,40 @@ createState(state1){
     //Change Token
 
     //check if next player exists
-    var nextPlayerID = this.state.token + 1;
+    this.updateToken(state);
+    this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
+  }//handleStay() ends
+
+  updateToken(state){
+    var nextPlayerID = state.token + 1;
 
     var newToken;
+
+    var preventInfiniteCounter = 0;
 
     if(state.tableProgress[nextPlayerID - 1].inPlay == "yes"){
       if(state.token+1>7)
       {
        newToken=1;
+       while(state.tableProgress[newToken - 1].inPlay == "no"
+              && preventInfiniteCounter<8){
+         newToken = newToken + 1;
+         preventInfiniteCounter = preventInfiniteCounter+1;
+       }
       }
       else{
-        newToken = this.state.token + 1;
+        newToken = state.token + 1;
       }
     }
     else{
+
       newToken = 1;
+      alert("as/ldma;d");
+      while(state.tableProgress[newToken - 1].inPlay == "no"
+             && preventInfiniteCounter<8){
+        newToken = newToken + 1;
+        preventInfiniteCounter = preventInfiniteCounter+1;
+      }
     }
 
     this.setState(
@@ -118,7 +146,7 @@ createState(state1){
       }
     );
 
-  }//handleStay() ends
+  }
 
   cardsDealt(st){
 

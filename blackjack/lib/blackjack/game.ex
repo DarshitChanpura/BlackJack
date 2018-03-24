@@ -11,7 +11,7 @@ defmodule Blackjack.Game do
       tableProgress: [
         %{"player" => 1,"score" => 0, "inPlay" => "yes", "cardsDealt" => []},
         %{"player" => 2,"score" => 0, "inPlay" => "yes", "cardsDealt" => []},
-        %{"player" => 3,"score" => 0, "inPlay" => "no", "cardsDealt" => []},
+        %{"player" => 3,"score" => 0, "inPlay" => "yes", "cardsDealt" => []},
         %{"player" => 4,"score" => 0, "inPlay" => "no", "cardsDealt" => []},
         %{"player" => 5,"score" => 0, "inPlay" => "no", "cardsDealt" => []},
         %{"player" => 6,"score" => 0, "inPlay" => "no", "cardsDealt" => []},

@@ -6,8 +6,8 @@ defmodule BlackjackWeb.GamesChannel do
   def join("games:" <> name, payload, socket) do
     IO.puts name
     if authorized?(payload) do
-      #game = Blackjack.GameBackup.load(name) || Game.reset()
-      game = Game.reset()
+      game = Blackjack.GameBackup.load(name) || Game.reset()
+      #game = Game.reset()
       socket = socket
                |> assign(:game, game)
                |> assign(:name, name)
@@ -31,31 +31,19 @@ defmodule BlackjackWeb.GamesChannel do
     {:reply, {:ok, %{"game" => game}}, socket}
   end
 
-  def handle_in("click", payload, socket) do
-    game = Game.update(socket.assigns[:game],payload["id"], payload["value"])
-    socket = socket
-      |> assign(:game, game)
-
-    Blackjack.GameBackup.save(socket.assigns[:name], game)
-    {:reply, {:ok, %{"game" => game}}, socket}
-  end
-
-  def handle_in("update",payload,socket) do
+  def handle_in("update", payload, socket) do
     game = %{
       cards: payload["game"]["cards"],
-			openedCard: payload["game"]["openedCard"],
-			matchCount: payload["game"]["matchCount"],
-			locked: payload["game"]["locked"],
-			clickCount: payload["game"]["clickCount"],
-      mismatch: payload["game"]["mismatch"]
-    }
-    socket = assign(socket,:game, game)
+      token: payload["game"]["token"],
+      tableProgress: payload["game"]["tableProgress"]
+    };
+
+    socket=assign(socket, :game, game);
 
     Blackjack.GameBackup.save(socket.assigns[:name], game)
-
     {:reply, {:ok, %{"game" => game}}, socket}
-
   end
+
 
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (games:lobby).
