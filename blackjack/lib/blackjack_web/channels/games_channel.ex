@@ -34,6 +34,7 @@ defmodule BlackjackWeb.GamesChannel do
   def handle_in("update", payload, socket) do
     game = %{
       cards: payload["game"]["cards"],
+      tablePlayerCount: payload["game"]["tablePlayerCount"],
       token: payload["game"]["token"],
       tableProgress: payload["game"]["tableProgress"]
     };
@@ -56,4 +57,8 @@ defmodule BlackjackWeb.GamesChannel do
   defp authorized?(_payload) do
     true
   end
+
+
+
+
 end

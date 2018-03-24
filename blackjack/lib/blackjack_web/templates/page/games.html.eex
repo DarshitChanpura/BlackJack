@@ -3,6 +3,9 @@
     <h1>BlackJack</h1>
     <script>
       window.tableId = "<%= @table_id %>";
+      window.user_id = " <%= @current_user.id %> ";
+      window.user_name = " <%= @current_user.name %> ";
+
     </script>
     <!-- <div id="root">
       <p>React app not loaded...</p>

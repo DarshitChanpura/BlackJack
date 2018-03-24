@@ -46,7 +46,9 @@ function init() {
   if(root){
     // Now that you are connected, you can join channels with a topic:
     let channel = socket.channel("games:" + window.tableId, {});
-    run_game(root,channel);
+    let userId=user_id;
+    let userName=user_name;
+    run_game(root,channel,userId,userName);
 
     //$('#gameImg').css("width", "100em");
   }

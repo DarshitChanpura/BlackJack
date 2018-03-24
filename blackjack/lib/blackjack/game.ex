@@ -8,14 +8,15 @@ defmodule Blackjack.Game do
                                         "40","41","42","43","44","45","46","47","48","49","50","51","52"]),
                                          fn(x) -> %{"character" => x, "flipped" => false} end),
       token: 1,
+      tablePlayerCount: 0,
       tableProgress: [
-        %{"player" => 1,"score" => 0, "inPlay" => "yes", "cardsDealt" => []},
-        %{"player" => 2,"score" => 0, "inPlay" => "yes", "cardsDealt" => []},
-        %{"player" => 3,"score" => 0, "inPlay" => "yes", "cardsDealt" => []},
-        %{"player" => 4,"score" => 0, "inPlay" => "no", "cardsDealt" => []},
-        %{"player" => 5,"score" => 0, "inPlay" => "no", "cardsDealt" => []},
-        %{"player" => 6,"score" => 0, "inPlay" => "no", "cardsDealt" => []},
-        %{"player" => 7,"score" => 0, "inPlay" => "no", "cardsDealt" => []}
+        %{"player" => 1, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "yes", "cardsDealt" => []},
+        %{"player" => 2, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "yes", "cardsDealt" => []},
+        %{"player" => 3, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []},
+        %{"player" => 4, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []},
+        %{"player" => 5, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []},
+        %{"player" => 6, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []},
+        %{"player" => 7, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []}
       ]
 		}
   end
