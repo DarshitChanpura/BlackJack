@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body>
+  <body background= "<%= static_path(@conn, "/css/landing.jpg") %>" id="bodyImg">
     <div class="container">
 
       <%= if get_flash(@conn, :info) do %>

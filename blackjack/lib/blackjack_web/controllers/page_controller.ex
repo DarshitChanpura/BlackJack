@@ -10,4 +10,9 @@ defmodule BlackjackWeb.PageController do
     tables = Games.list_tables()
     render conn, "lobby.html", tables: tables
   end
+
+  def game(conn, params) do
+   render conn, "games.html", table_id: params["table_id"]
+ end
+
 end

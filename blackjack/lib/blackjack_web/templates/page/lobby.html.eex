@@ -1,5 +1,8 @@
 
-<div id="lobby-bg" style="background: url(<%= static_path(@conn, "/css/lobby.jpg") %>);">
+<div id="lobby-bg" style="color:white;">
+
+
+
   <h1>Table List</h1>
   <div class="table">
   <div class="row">
@@ -28,10 +31,11 @@
     </div>
 
     <div class="col">
-          <button class="timespent-button btn btn-secondary btn-xs"
+          <button
+              class="join-button btn btn-secondary btn-xs"
               data-table-id="<%= table.id %>"
               data-table-status="<%= table.status %>"
-              data-task-playercount="<%= table.playerCount %>">
+              data-table-playercount="<%= table.playerCount %>">
               Join
       </button>
     </div>

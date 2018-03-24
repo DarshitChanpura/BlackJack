@@ -23,41 +23,84 @@ import "phoenix_html"
 
 import socket from "./socket"
 
-//import run_game from "./memory";
+import run_game from "./blackjack";
 
 function init() {
-//Modal jQuery for Landing page
-let modal = document.getElementById('landing-modal');
-modal.style.display="none";
-//alert(modal);
-if(modal)
-{
-  //alert("adasd");
-  setTimeout(function(){
-    modal.style.display = "block";
-  },1000);
-
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
+  //$('#bodyImg').css("opacity", "0.8");
+  //Modal jQuery for Landing page
+  if(document.getElementById('landing-modal'))
+  {
+    let modal = document.getElementById('landing-modal');
+    modal.style.display="none";
+    //alert(modal);
+    if(modal)
+    {
+      setTimeout(function(){
+        modal.style.display = "block";
+      },1000);
+    }
   }
-}
   ////////////////////////////////////////////////
-  /*let root = document.getElementById('game');
+  //Join Socket
+  let root = document.getElementById('game');
   if(root){
-  // Now that you are connected, you can join channels with a topic:
-    let channel = socket.channel("games:" + window.gameName, {});
+    // Now that you are connected, you can join channels with a topic:
+    let channel = socket.channel("games:" + window.tableId, {});
     run_game(root,channel);
+
+    //$('#gameImg').css("width", "100em");
   }
-else{
-  $("#joinGame").click(function() {
+  else{
+    // $("#joinGame").click(function() {
+    //   document.getElementById("gameLink").setAttribute("href", "/game/"+$("#playerName").val());
+    //
+    // });
+  }
 
-      document.getElementById("gameLink").setAttribute("href", "/game/"+$("#playerName").val());
-
-    });
-}*/
 }
 
 // Use jQuery to delay until page loaded.
 $(init);
+$(init_join_game);
+
+function init_join_game(){
+  if(!$(".join_button")){return;}
+  $(".join-button").click(join_game_click);
+}
+
+function join_game_click(ev)
+{
+  let btn=$(ev.target);
+  let table_id=btn.data("table-id");
+  let table_status=btn.data("table-status");
+  let table_playercount=btn.data("table-playercount");
+
+  let text = JSON.stringify({
+    table: {
+      table_id: table_id,
+      table_status: table_status,
+      table_playercount:  table_playercount
+    }
+  });
+
+  let x=0;
+  $.ajax("/game/" + table_id, {
+    method: "POST",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    data: text,
+    success: (resp) => {}
+  });
+  window.location.href="/game/"+table_id;
+
+
+}
+
+
+
+function appendImage(){
+//function appendImage(className,source){
+//  $("."+className).prepend($('<img>',{src:source}));
+alert("aaaa");
+
+}

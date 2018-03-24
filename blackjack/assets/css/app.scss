@@ -2,24 +2,55 @@
 
 @import "bootstrap";
 
-
-#landing-bg{
-  //background: "<%= static_path(@conn,'landing.jpg') %>";
-  //background-color: red;
-  width:100%;
-  height: 100%;
-}
-#lobby-bg{
-  background-image: url("/lobby.jpg");
-  width:100%;
-  height: 100%;
-}
-#game-log-bg{
-  background-image: url("/TableBG.jpg");
-  width:100%;
-  height: 100%;
+.gameImg
+{
+  position:absolute;
+background-image: url("./tableB.png");
+height:35em;
+width:100%;
+background-repeat: no-repeat;
 }
 
+.btns{
+  margin-right:10em;
+  float:right;
+}
+
+
+.p1-cards{
+  margin-top: 170px;
+  margin-left: 800px;
+}
+
+.p2-cards{
+  margin-top: 300px;
+  margin-left: 700px;
+}
+
+.p3-cards{
+  margin-top: 400px;
+  margin-left: 610px;
+}
+
+.p4-cards{
+  margin-top: 450px;
+  margin-left: 460px;
+}
+
+.p5-cards{
+  margin-top: 400px;
+  margin-left: 340px;
+}
+
+.p6-cards{
+  margin-top: 300px;
+  margin-left: 210px;
+}
+
+.p7-cards{
+  margin-top: 170px;
+  margin-left: 140px;
+}
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */

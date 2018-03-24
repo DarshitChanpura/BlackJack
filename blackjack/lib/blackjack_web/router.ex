@@ -6,7 +6,7 @@ defmodule BlackjackWeb.Router do
     plug :fetch_session
     plug :get_current_user
     plug :fetch_flash
-    plug :protect_from_forgery
+    #plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
@@ -31,9 +31,13 @@ defmodule BlackjackWeb.Router do
 
     get "/", PageController, :index
     get "/lobby", PageController, :lobby
+    post "/game/:table_id", PageController, :game
+    get "/game/:table_id", PageController, :game
+
     resources "/users", UserController
     resources "/tables", TableController
     resources "/gamelog", GameLogController
+
 
     post "/session", SessionController, :create
     delete "/session", SessionController, :delete
