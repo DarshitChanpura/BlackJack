@@ -42,7 +42,10 @@ defmodule BlackjackWeb.GamesChannel do
     socket=assign(socket, :game, game);
 
     Blackjack.GameBackup.save(socket.assigns[:name], game)
-    {:reply, {:ok, %{"game" => game}}, socket}
+    #{:reply, {:ok, %{"game" => game}}, socket}
+
+    broadcast! socket, "udpate", %{"game" => game}
+    {:noreply, socket}
   end
 
 

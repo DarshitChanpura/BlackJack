@@ -1,6 +1,5 @@
 <div class="row" style="color:white;">
   <div class="col">
-    <h1>BlackJack</h1>
     <script>
       window.tableId = "<%= @table_id %>";
       window.user_id = " <%= @current_user.id %> ";
@@ -10,7 +9,7 @@
     <!-- <div id="root">
       <p>React app not loaded...</p>
     </div> -->
-    <h4> Table : <%= @table_id %> </h4>
+    <h4 style="margin-left:19em;"> Table : <%= @table_id %> </h4>
     <div id="game">
       Loading...
     </div>

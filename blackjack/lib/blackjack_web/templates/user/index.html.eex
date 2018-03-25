@@ -1,3 +1,4 @@
+<div style="color:white;">
 <h2>Listing Users</h2>
 
 <table class="table">
@@ -28,3 +29,4 @@
 </table>
 
 <span><%= link "New User", to: user_path(@conn, :new) %></span>
+</div>

@@ -14,7 +14,7 @@ class Blackjack extends React.Component {
 
   constructor(props) {
     super(props);
-     //this.renderCards= this.renderCards.bind(this);
+    //this.renderCards= this.renderCards.bind(this);
     // this.isMatch = this.isMatch.bind(this);
     // this.reset = this.reset.bind(this);
     this.channel=props.channel;
@@ -31,12 +31,12 @@ class Blackjack extends React.Component {
     };
 
     this.channel.join()
-                      .receive("ok",this.createState.bind(this))
-                      .receive("error",resp => console.log("Error in joining!"));
+    .receive("ok",this.createState.bind(this))
+    .receive("error",resp => console.log("Error in joining!"));
   }//constructor()
 
-createState(state1){
-    console.log(state1.game.tableProgress);
+  createState(state1){
+    //console.log(state1.game.tableProgress);
     this.setState(state1.game);
 
     var st = state1.game;
@@ -45,6 +45,7 @@ createState(state1){
 
     var flag = "false";
     var tPs = st.tableProgress;
+    // JOIN the user to the table
     for(var x=0; x<7; x++){
       if(tPs[x].userId == this.userId){
         flag="true";
@@ -68,140 +69,194 @@ createState(state1){
     var pId=0;
     for(var i=0; i<7; i++){
       if(st.tableProgress[i].userId == this.userId){
-          cardsOfUser = st.tableProgress[i].cardsDealt;
-          pId = st.tableProgress[i].player;
+        //alert(i);
+        cardsOfUser = st.tableProgress[i].cardsDealt;
+        pId = st.tableProgress[i].player;
       }
     }
-    //console.log(cardsOfus);
+    //console.log(pId);
     var source;
     for(var j=0; j< cardsOfUser.length; j++){
-        source = "/css/"+cardsOfUser[j].character+".png";
-        $(".p"+pId+"-cards").prepend($('<img>',{src:source, style: "width:3.5em"}));
+      source = "/css/"+cardsOfUser[j].character+".png";
+      $(".p"+pId+"-cards").prepend($('<img>',{src:source, style: "width:3.5em"}));
     }
 
     for(var i=1; i<8; i++)
     {
       $(".players").append($('<label>',{for:i+"-player", class: "p"+i+"-names", text: this.state.tableProgress[i-1].userName}));
       $(".players").append('<br/>');
-      $(".players").append($('<label>',{for:i+"-score", class: "p"+i+"-names", text: this.state.tableProgress[i-1].score}));
+      $(".players").append($('<label>',{for:i+"-score", class: "p"+i+"-scores", text: this.state.tableProgress[i-1].score}));
     }
-//var cardsDealt = this.state.tableProgress[];
-}
+
+    //Hide Button initially
+    $(".btns").hide();
+
+    //Show buttons if token equals user's Player ID
+    //  console.log("ddd");
+    //console.log(this.state.tableProgress[this.state.token-1]);
+    if(this.state.tableProgress[this.state.token-1].userId == this.userId){
+      $(".btns").show();
+    }
+
+  }
 
   render(){
+    return(
+      <div>
+      <div className="gameImg">
+      <img src="/css/deck.png" className="deckImg"/>
+      <div className="btns">
+      <input type="submit" id="hit-btn" className="btn btn-warning" value="HIT" onClick={(e) => this.handleHit(this.state,e)} />
+      &nbsp;&nbsp;&nbsp;
+      <input type="submit" id="stay-btn" className="btn btn-primary" value="STAY" onClick={(e) => this.handleStay(this.state,e)} />
+      </div>
+      <div className="players">
+      <CardsContainer channel={this.channel} state={this.state}/>
+      </div>
+      <input type="submit" id="quit-btn" className="btn btn-danger" value="Quit" onClick={(e) => this.handleQuit(this.state,e)} />
+      </div>
+      </div>
+    );
+  }
 
-    //var pId=0;
-    // for(var i=0; i<7; i++){
-    //   if(this.state.tableProgress[i].userId == this.userId){
-    //       pId = this.state.tableProgress[i].player;
+  handleHit(state, event)
+  {
+    if(state.token==0){alert("return coz no token");return;}
+    alert(state.token);
+    //Hide buttons if token != user's Player ID
+    // for(var i=0;i<7;i++)
+    // {
+    //   if(state.tableProgress[i].player != state.token){
+    //     $(".btns").hide();
+    //     return;
     //   }
     // }
 
 
-    return(
-    <div>
-      <div className="gameImg">
-        <div className="btns">
-          <input type="submit" id="hit-btn" className="btn btn-warning" value="HIT" onClick={(e) => this.handleHit(this.state,e)} />
-          &nbsp;&nbsp;&nbsp;
-          <input type="submit" id="stay-btn" className="btn btn-primary" value="STAY" onClick={(e) => this.handleStay(this.state,e)} />
-        </div>
-        <div className="players">
-        <CardsContainer channel={this.channel} state={this.state}/>
-        </div>
-      </div>
-    </div>
-  );
-  }
+    var cards = state.cards;
+    var cardDealt = cards[0];
+    var cardVal = cardDealt.character;
+    var source = "/css/"+cardVal+".png";
+    var playerID = state.token;
+    var tP = state.tableProgress;
+    var newscore = tP[playerID-1].score; // -1 because of indexing
+    var flag="";//busted flag
 
-  handleHit(state, event){
+    $(".p"+playerID+"-cards").prepend($('<img>',{src:source, style: "width:3.5em"}));
 
-  var cards = state.cards;
-  var cardDealt = cards[0];
-  var cardVal = cardDealt.character;
-  var source = "/css/"+cardVal+".png";
-  var playerID = this.state.token;
-  var tP = this.state.tableProgress;
-  var newscore = tP[playerID-1].score; // -1 because of indexing
-
-  $(".p"+playerID+"-cards").prepend($('<img>',{src:source, style: "width:3.5em"}));
-
-  //add the dealt cards
-  tP[playerID - 1].cardsDealt.push(cardDealt);
-
-  // update score
-  if(parseInt(cardVal)%13 >= 10 || parseInt(cardVal)%13 == 0)
-  {
-    newscore=newscore+10;
-  }else{
-    newscore = newscore + parseInt(cardVal)%13;
-  }
-  tP[playerID - 1].score=newscore;
-
-  if(newscore>21){
-    alert("Busted! You Lose!!!");
-    tP[playerID - 1].inPlay="no";
-    tP[playerID - 1].cardDealt=[];
-    tP[playerID - 1].score=0;
-    this.setState(
-      {tableProgress: tP}
-    );
-    this.updateToken(state);
-  }
-  var updatedCards = this.state.cards.filter(function(card){
-    return card.character != cardVal;
-  });
-
-  console.log(tP);
-  this.setState(
-    { cards: updatedCards,
-      tableProgress: tP}
-  );
-this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
-
-  console.log(state);
+    if(tP[playerID - 1].inPlay == "yes"){
 
 
-  }//handleHIT() ends
+      //add the dealt cards
+      tP[playerID - 1].cardsDealt.push(cardDealt);
 
-  handleStay(state,event){
-    alert(event.target.value);
-    //Change Token
-
-    //check if next player exists
-    this.updateToken(state);
-    this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
-  }//handleStay() ends
-
-  updateToken(state){
-    var nextPlayerID = state.token + 1;
-
-    var newToken;
-
-    var preventInfiniteCounter = 0;
-
-    if(state.tableProgress[nextPlayerID - 1].inPlay == "yes"){
-      if(state.token+1>7)
+      // update score
+      if(parseInt(cardVal)%13 >= 10 || parseInt(cardVal)%13 == 0)
       {
-       newToken=1;
-       while(state.tableProgress[newToken - 1].inPlay == "no"
-              && preventInfiniteCounter<7){
-         newToken = newToken + 1;
-         preventInfiniteCounter = preventInfiniteCounter+1;
-       }
-      }
-      else{
-        newToken = state.token + 1;
+        newscore=newscore+10;
+      }else{
+        newscore = newscore + parseInt(cardVal)%13;
       }
     }
-    else{
-      preventInfiniteCounter = 0;
-      newToken = 1;
-      alert(state.tableProgress[newToken-1].inPlay);
-      while(state.tableProgress[newToken - 1].inPlay == "no"
-             && preventInfiniteCounter<7){
-        newToken = newToken + 1;
-        preventInfiniteCounter = preventInfiniteCounter+1;
+    tP[playerID - 1].score=newscore;
+
+    if(newscore>21){
+      $(".btns").hide();
+      tP[playerID - 1].inPlay="no";
+      //tP[playerID - 1].cardDealt=[];
+      //tP[playerID - 1].score=0;
+      this.setState(
+        {tableProgress: tP,
+          tablePlayerCount: state.tablePlayerCount - 1}
+        );
+        this.updateToken(state);
+        this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
+        flag="busted";
+      }else{
+        this.setState(
+          {tableProgress: tP}
+        );
+        //this.updateToken(state);
+        this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
+      }
+
+      var updatedCards =cards.filter(function(card){
+        return card.character != cardVal;
+      });
+
+      this.setState(
+        { cards: updatedCards}
+      );
+
+      this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
+
+      //Update Scores
+      for(var i=1; i<8; i++)
+      {
+        $(".p"+i+"-scores").text(tP[i-1].score);
+      }
+
+
+      if(flag=="busted"){
+        alert("Busted! You Lose!!!");
+        //location.reload();
+      }
+
+    }//handleHIT() ends
+
+    handleStay(state,event){
+      alert(event.target.value);
+      //Change Token
+
+      //Hide Button initially
+      $(".btns").hide();
+
+      //check if next player exists
+      this.updateToken(state);
+      this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
+
+      //Show buttons if token equals user's Player ID
+      console.log("curr table:");
+      console.log(this.state.tableProgress[this.state.token-1]);
+      if(this.state.tableProgress[this.state.token-1].userId == this.userId){
+        $(".btns").show();
+      }
+
+    }//handleStay() ends
+
+    updateToken(state){
+      var nextPlayerID = state.token + 1;
+      var newToken;
+      var preventInfiniteCounter = 0;
+
+      if(state.tableProgress[nextPlayerID - 1].inPlay == "yes"){
+        if(state.token+1>7)
+        {
+          newToken=1;
+          console.log("pehila"+this.state)
+          while(this.state.tableProgress[newToken - 1].inPlay == "no"
+          && preventInfiniteCounter<7){
+            newToken = newToken + 1;
+            preventInfiniteCounter = preventInfiniteCounter+1;
+          }
+        }
+        else{
+          newToken = this.state.token + 1;
+        }
+      }
+      else{
+        preventInfiniteCounter = 0;
+        newToken = 1;
+        //alert(state.tableProgress[newToken-1].inPlay);
+        console.log(this.state);
+        while(this.state.tableProgress[newToken - 1].inPlay == "no"
+        && preventInfiniteCounter<7){
+          newToken = newToken + 1;
+          preventInfiniteCounter = preventInfiniteCounter+1;
+        }
+        if(preventInfiniteCounter>=7)
+        {//alert(preventInfiniteCounter+"\t:Counter");
+        newToken=0;
       }
     }
 
@@ -211,7 +266,7 @@ this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
       }
     );
 
-  }
+  }//updateToken Ends
 
   cardsDealt(st){
 
@@ -224,7 +279,7 @@ this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
   }
 
 
-}//class endsS
+}//class ends
 
 
 
@@ -240,7 +295,7 @@ class CardsContainer extends React.Component {
       <div className={cardClass}>
       </div>
     );
-}//render
+  }//render
 
   // setImageElement(state1){
   //   state1
@@ -259,17 +314,17 @@ class Image extends React.Component {
     this.source=props.source;
   }//const ends
 
-render(){
+  render(){
 
-  let style={
+    let style={
       width: '50em',
-      marginTop: '170px',
+      marginTop: '-30em',
       marginLeft: '800px'
-  };
+    };
 
-  return (
-    <img src={this.source} style={style}/>
-  );
-}
+    return (
+      <img src={this.source} style={style}/>
+    );
+  }
 
 }//Image Ends

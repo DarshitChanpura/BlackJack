@@ -6,25 +6,37 @@
 {
   position:absolute;
 background-image: url("./tableB.png");
-height:35em;
+height:38em;
 width:100%;
 background-repeat: no-repeat;
 }
 
+.deckImg{
+  width: 20em;
+  height: 18em;
+  margin-left: 21em;
+}
+
+#quit-btn{
+  margin-top: -42em;
+  margin-left: -4em;
+}
+
 .btns{
-  margin-right:10em;
+  margin-right:13em;
   float:right;
+  margin-top: 5em;
 }
 
 
 .p1-cards{
-  margin-top: 170px;
+  margin-top: -98px;
   margin-left: 800px;
 }
 
 .p2-cards{
-  margin-top: 300px;
-  margin-left: 700px;
+  margin-top: 24px;
+  margin-left: 663px;
 }
 
 .p3-cards{
@@ -94,6 +106,70 @@ background-repeat: no-repeat;
   top: 18em;
 }
 
+.p1-scores{
+  position: absolute;
+  margin-left: 50em;
+  top: 19.5em;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: black;
+}
+
+.p2-scores{
+  position:absolute;
+  margin-left: 46em;
+  top: 26.5em;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: black;
+}
+
+.p3-scores{
+  position:absolute;
+  margin-left: 39em;
+  top: 31.5em;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: black;
+}
+
+.p4-scores{
+  position:absolute;
+  margin-left: 30.5em;
+  top: 33.5em;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: black;
+}
+
+.p5-scores{
+  position:absolute;
+  margin-left: 21.5em;
+  top: 31.5em;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: black;
+}
+
+.p6-scores{
+  position:absolute;
+  margin-left: 15em;
+  top: 26.5em;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: black;
+}
+
+.p7-scores{
+  position:absolute;
+  margin-left: 10em;
+  top: 19.5em;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: black;
+}
+
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -108,6 +184,7 @@ background-repeat: no-repeat;
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+
 
 /* Modal Content */
 .modal-content {
