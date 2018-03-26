@@ -16,4 +16,7 @@ defmodule Blackjack.GameBackup do
       Map.get(state, name)
     end
   end
+  defp schedule_work do
+    Process.send_after(self(), :work, 1_000)
+  end
 end

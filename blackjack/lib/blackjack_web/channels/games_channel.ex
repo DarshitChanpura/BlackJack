@@ -39,13 +39,13 @@ defmodule BlackjackWeb.GamesChannel do
       tableProgress: payload["game"]["tableProgress"],
       tableMessages: payload["game"]["tableMessages"]
     };
-
+    #game = Blackjack.GameBackup.load(socket.assigns[:name]);
     socket=assign(socket, :game, game);
 
     Blackjack.GameBackup.save(socket.assigns[:name], game)
     #{:reply, {:ok, %{"game" => game}}, socket}
 
-    broadcast! socket, "udpate", %{"game" => game}
+    broadcast! socket, "update", %{"game" => game}
     {:noreply, socket}
   end
 
