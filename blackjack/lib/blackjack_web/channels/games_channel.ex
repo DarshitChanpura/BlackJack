@@ -5,14 +5,15 @@ defmodule BlackjackWeb.GamesChannel do
 
   def join("games:" <> name, payload, socket) do
     IO.puts name
-    if authorized?(payload) do
-      game = Blackjack.GameBackup.load(name) || Game.reset()
-      #game = Game.reset()
-      socket = socket
-               |> assign(:game, game)
-               |> assign(:name, name)
+    game = Blackjack.GameBackup.load(name) || Game.reset()
+    #game = Game.reset()
+    socket = socket
+             |> assign(:game, game)
+             |> assign(:name, name)
 
-      Blackjack.GameBackup.save(socket.assigns[:name], game)
+    Blackjack.GameBackup.save(socket.assigns[:name], game)
+    if authorized?(payload) do
+
       {:ok, %{"game" => game},socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -22,16 +23,20 @@ defmodule BlackjackWeb.GamesChannel do
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
   def handle_in("reset", payload, socket) do
+
     game = Game.reset()
     socket = socket
       |> assign(:game, game)
 
-
     Blackjack.GameBackup.save(socket.assigns[:name], game)
-    {:reply, {:ok, %{"game" => game}}, socket}
+    #{:reply, {:ok, %{"game" => game}}, socket}
+
+    broadcast! socket, "reset", %{"game" => game}
+    {:noreply, socket}
   end
 
   def handle_in("update", payload, socket) do
+
     game = %{
       cards: payload["game"]["cards"],
       tablePlayerCount: payload["game"]["tablePlayerCount"],
@@ -39,9 +44,7 @@ defmodule BlackjackWeb.GamesChannel do
       tableProgress: payload["game"]["tableProgress"],
       tableMessages: payload["game"]["tableMessages"]
     };
-    #game = Blackjack.GameBackup.load(socket.assigns[:name]);
     socket=assign(socket, :game, game);
-
     Blackjack.GameBackup.save(socket.assigns[:name], game)
     #{:reply, {:ok, %{"game" => game}}, socket}
 
