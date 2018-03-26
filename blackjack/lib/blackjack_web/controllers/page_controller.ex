@@ -12,7 +12,10 @@ defmodule BlackjackWeb.PageController do
   end
 
   def game(conn, params) do
-   render conn, "games.html", table_id: params["table_id"]
- end
+   render conn, "games.html", table_id: params["table_id"], spectator: params[" "]
+  end
 
+  def observeGame(conn, params) do
+   render conn, "games.html", table_id: params["table_id"], spectator: params["spectator"]
+  end
 end

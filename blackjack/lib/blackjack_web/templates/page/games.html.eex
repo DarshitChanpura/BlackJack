@@ -10,7 +10,9 @@
       window.user_id = " <%= @current_user.id %> ";
       window.user_name = " <%= @current_user.name %> ";
 
-    </script>
+      window.spectator = "<%= @spectator %>";
+      </script>
+
     <!-- <div id="root">
       <p>React app not loaded...</p>
     </div> -->

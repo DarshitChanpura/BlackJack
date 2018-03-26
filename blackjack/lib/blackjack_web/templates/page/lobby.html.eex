@@ -33,7 +33,7 @@
     <div class="col">
       <%= table.status %>
     </div>
-
+    <%= if table.playerCount > 7 do %>
     <div class="col" style="padding: 0.5em;">
           <button
               class="join-button btn btn-success btn-xs"
@@ -43,6 +43,17 @@
               Join Table
       </button>
     </div>
+    <% else %>
+    <div class="col" style="padding: 0.5em;">
+          <button
+              class="observe-button btn btn-info btn-xs"
+              data-table-id="<%= table.id %>"
+              data-table-status="<%= table.status %>"
+              data-table-playercount="<%= table.playerCount %>">
+              Observe Game
+      </button>
+    </div>
+    <% end %>
   </div>
   <% end %>
   </div>

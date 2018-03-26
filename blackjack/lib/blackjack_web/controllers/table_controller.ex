@@ -38,7 +38,7 @@ defmodule BlackjackWeb.TableController do
 
   def update(conn, %{"id" => id, "table" => table_params}) do
     table = Games.get_table!(id)
-
+    IO.inspect table_params 
     case Games.update_table(table, table_params) do
       {:ok, table} ->
         conn
