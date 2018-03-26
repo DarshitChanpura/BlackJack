@@ -8,8 +8,8 @@
 
 
   <h1>Table List</h1>
-  <div class="table">
-  <div class="row">
+  <div class="table" style="background: black; border: 1px solid white;">
+  <div class="row" style="border-bottom: 1px solid white;width:100%;margin-left:0px">
     <div class="col">
       <strong>TableName</strong>
     </div>
@@ -23,7 +23,7 @@
     </div>
   </div>
   <%= Enum.map @tables, fn table -> %>
-  <div class="row" style="color:red; ">
+  <div class="row" style="color:white; border-bottom: 1px solid white;width:100%;margin-left:0px">
     <div class="col">
       <%= table.tableName %>
     </div>

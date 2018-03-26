@@ -1,3 +1,8 @@
+<div style="margin-left:55em;margin-top:2em;color:white;">
+  <%= if @current_user do %>
+  Logged in as: <span style="color:red;"><%= @current_user.name %></span> | <%= link "Log Out", to: "/session", method: :delete %>
+  <% end %>
+</div>
 <div class="row" style="color:white;">
   <div class="col">
     <script>

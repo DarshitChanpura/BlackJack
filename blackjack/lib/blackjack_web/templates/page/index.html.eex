@@ -5,10 +5,10 @@
       <h1 style="color:white;">BlackJack</h1>
       <%= form_tag("/session", method: :post) do %>
         <div class="form-group" id="landing-modal" style="padding-top:12em;">
-        <p style="color:red; font-size:1.2em;">  Email&nbsp;&nbsp;&nbsp;
+        <p style="color:white; font-size:1.2em;">  Email&nbsp;&nbsp;&nbsp;
          <input type="email" name="email" placeholder="xx@example.com"></p>
         <div class="form-group">
-          <button class="btn btn-primary">Log In</button>  &nbsp;&nbsp;<span style="color:red;">||</span> &nbsp;
+          <button class="btn btn-primary">Log In</button>  &nbsp;&nbsp;<span style="color:white;">||</span> &nbsp;
           <%= link "Register", to: user_path(@conn, :new) %>
         </div>
         </div>

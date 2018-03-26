@@ -36,7 +36,8 @@ defmodule BlackjackWeb.GamesChannel do
       cards: payload["game"]["cards"],
       tablePlayerCount: payload["game"]["tablePlayerCount"],
       token: payload["game"]["token"],
-      tableProgress: payload["game"]["tableProgress"]
+      tableProgress: payload["game"]["tableProgress"],
+      tableMessages: payload["game"]["tableMessages"]
     };
 
     socket=assign(socket, :game, game);

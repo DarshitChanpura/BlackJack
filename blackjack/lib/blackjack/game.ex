@@ -9,9 +9,10 @@ defmodule Blackjack.Game do
                                          fn(x) -> %{"character" => x, "flipped" => false} end),
       token: 1,
       tablePlayerCount: 0,
+      tableMessages: [],
       tableProgress: [
-        %{"player" => 1, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "yes", "cardsDealt" => []},
-        %{"player" => 2, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "yes", "cardsDealt" => []},
+        %{"player" => 1, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []},
+        %{"player" => 2, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []},
         %{"player" => 3, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []},
         %{"player" => 4, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []},
         %{"player" => 5, "userId"=> "", "userName"=> "-", "score" => 0, "inPlay" => "no", "cardsDealt" => []},
