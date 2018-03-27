@@ -21,12 +21,14 @@
   position: absolute;
   float: right;
   height: 500px;
-  width: 220px;
+  width: 280px;
   overflow: scroll;
   text-overflow: ellipsis;
-  margin-left: 75em;
-  background: white;
+  margin-left: 70em;
+  background: lightgrey;
   border-radius: 5px;
+  padding: 5px 11px;
+  font-size: 1em;
 }
 
 
@@ -40,12 +42,10 @@
   margin-left: 1em;
 }
 .join-button{
-  margin-left: 17em;
   display: inline-block;
 }
 .observe-button{
   float:right;
-
 }
 .btns{
   margin-right:13em;

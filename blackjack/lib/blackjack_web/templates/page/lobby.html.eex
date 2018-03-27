@@ -7,13 +7,13 @@
   </div>
 
 
-  <h1 style="color:red;">Table List</h1>
-  <span><%= link "Create New Table", to: table_path(@conn, :new), class: "btn btn-warning",style: "color:white;margin-left:60em;margin-bottom: 1em;" %></span>
+  <h1 style="color:red;margin-left:6.5em">Table List</h1>
+  <span><%= link "Create New Table", to: table_path(@conn, :new), class: "btn btn-warning",style: "color: black;margin-left: 48em;margin-bottom: 1em;" %></span>
   <!-- <button style="color:white;margin-left:60em;" class="btn btn-warning">Create Table</button -->
 
-  <div class="table" style="background: black; border: 1px solid white;">
+  <div class="table" style="background: black; border: 1px solid white;border-radius: 3px;width: 58%;margin-left: 17em;">
   <div class="row" style="border-bottom: 1px solid white;width:100%;margin-left:0px">
-    <div class="col">
+    <div class="col" style="font-size:1.5em">
       <strong>TableName</strong>
     </div>
     <!-- <div class="col">
@@ -22,7 +22,8 @@
     <div class="col">
       <strong>Status</strong>
     </div> -->
-    <div class="col">
+    <div class="col" style="font-size:1.5em; text-align:center">
+      <strong>Actions</strong>
     </div>
   </div>
   <%= Enum.map @tables, fn table -> %>

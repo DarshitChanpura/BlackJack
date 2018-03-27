@@ -9,7 +9,7 @@ import App from './app.js';
 export default function run_game(root,channel,userId,userName,spectator) {
   ReactDOM.render(<Blackjack channel={channel} root={root} userId={userId} userName={userName} spectator={spectator}/>, root);
 }
-
+// main component
 class Blackjack extends React.Component {
 
   constructor(props) {
@@ -32,10 +32,12 @@ class Blackjack extends React.Component {
       tableMessages:[],
     };
 
+    // joining the channel
     this.channel.join()
     .receive("ok",this.createState.bind(this))
     .receive("error",resp => console.log("Error in joining!"));
 
+    // listening to incoming updates
     this.channel.on("update", payload=>
     { let game = payload.game;
       this.setState(game);
@@ -48,8 +50,9 @@ class Blackjack extends React.Component {
         this.updateState(payload);});
 
 
-  }//constructor()
+  }//constructor ends
 
+  // initial state
   createState(state1){
 
     this.setState(state1.game);
@@ -58,40 +61,49 @@ class Blackjack extends React.Component {
 
     var flag = "false";
 
-    //alert(this.spectator);
+    // check if user joined as a spectator or player
     if(this.spectator != "spectator")
     {
-      // JOIN the user to the table
+      // JOIN the returning user to the table
       for(var x=0; x<7; x++){
         if(st.tableProgress[x].userId == this.userId){
           flag="true";
         }
       }
+      // find a seat for the user
       if(flag == "false"){
         st.tablePlayerCount = st.tablePlayerCount + 1;
+        var tableFull= "true";
         for(var i=0; i<7; i++){
           if(st.tableProgress[i].userId == ""){
             st.tableProgress[i].userId = this.userId;
             st.tableProgress[i].userName = this.userName;
             st.tableProgress[i].inPlay = "yes";
+            tableFull= "false";
             break;
           }
         }
-
+        // check if table full
+        if(tableFull == "true"){
+          alert("Sorry, Table Full!");
+          st.tableMessages.push(this.userName+" is now as a spectator");
+        }
+        else{
+          st.tableMessages.push(this.userName+" has joined the table");
+        }
       }
-      st.tableMessages.push(this.userName+" has joined the table");
     }else{
-      st.tableMessages.push(this.userName+" is a spectator");
+      st.tableMessages.push(this.userName+" is now as a spectator");
     }
     st.winner="";
     this.setState({
       st
     });
 
-     this.channel.push("update",{game: this.state}).receive("ok",resp=>{
-       this.udpateState(resp);
-  });
+    this.channel.push("update",{game: this.state}).receive("ok",resp=>{
+       this.updateState(resp);});
 
+    // updates table events
     this.appendMessages(this.state);
 
     var cardsOfUser = [];
@@ -108,7 +120,7 @@ class Blackjack extends React.Component {
         cardsOfUser = st.tableProgress[i-1].cardsDealt;
         pId = st.token;
         var source;
-
+        // display cards of users
         for(var j=0; j< cardsOfUser.length; j++){
           source = "/css/"+cardsOfUser[j].character+".png";
           $(".p"+i+"-cards").prepend($('<img>',{src:source, style: "width:3.5em"}));
@@ -116,6 +128,7 @@ class Blackjack extends React.Component {
 
     }
 
+    // update the scores and usernames
     for(var i=1; i<8; i++)
     {
       $(".players").append($('<label>',{for:i+"-player", class: "p"+i+"-names", text: st.tableProgress[i-1].userName}));
@@ -126,25 +139,26 @@ class Blackjack extends React.Component {
     //Hide Button initially
     $(".btns").hide();
 
-    //Show buttons if token equals users Player ID
+    // wait for other players to join
     if(plC==1){
       st.tableMessages.push("Waiting for other players to join");
       this.appendMessages(st);
     }
 
+    // Show buttons if token equals users Player ID
+    // and current user is not a spectator
+    // and playerCount atleast 2
     if(this.state.tableProgress[this.state.token-1].userId == this.userId && this.spectator != "spectator" && plC > 1){
       $(".btns").show();
     }
 
   }
 
+  // update the state of the game on the go
   updateState(state1){
 
       var st = state1.game;
-
-      this.setState({
-        st
-      });
+      this.setState({st});
 
       this.appendMessages(st);
 
@@ -158,12 +172,9 @@ class Blackjack extends React.Component {
       $(".p6-cards").empty();
       $(".p7-cards").empty();
 
-      
-
+      // display cards of users
       var plC = 0;
       for(var i=1; i<8; i++){
-        //if(st.tableProgress[i].userId == this.userId){
-          //alert(i);
           cardsOfUser = [];
           cardsOfUser = st.tableProgress[i-1].cardsDealt;
           pId = st.token;
@@ -173,13 +184,12 @@ class Blackjack extends React.Component {
             plC = plC + 1;
           }
           for(var j=0; j< cardsOfUser.length; j++){
-
             source = "/css/"+cardsOfUser[j].character+".png";
             $(".p"+i+"-cards").prepend($('<img>',{src:source, style: "width:3.5em"}));
           }
-        //}
       }
 
+      // update scores and usernames
       for(var i=1; i<8; i++)
       {
         $(".p"+i+"-names").html(st.tableProgress[i-1].userName);
@@ -189,17 +199,20 @@ class Blackjack extends React.Component {
       //Hide Button initially
       $(".btns").hide();
 
-      //Show buttons if token equals users Player ID
+      // wait for other players to join
       if(plC==1){
         st.tableMessages.push("Waiting for other players to join");
         this.appendMessages(st);
       }
 
+      // Show buttons if token equals users Player ID
+      // and current user is not a spectator
+      // and playerCount atleast 2
       if(st.tableProgress[st.token-1].userId == this.userId && this.spectator != "spectator" && plC > 1){
         $(".btns").show();
       }
 
-      //console.log(st);
+      // check if there is a winner
       if(st.winner != ""){
         alert(st.winner+" WON!");
         this.channel.push("reset").receive("ok",resp => {this.updateState(resp);});
@@ -210,25 +223,25 @@ class Blackjack extends React.Component {
 
   }
 
+  // handles what to do on if a player wins
   handleWin(state){
     var st=state;
-    //alert("Congratulations You Won!");
 
     st.tableMessages.push(this.userName +" Won!");
     this.appendMessages(st);
     this.channel.push("update",{game: st}).receive("ok",resp=>{
       this.updateState(resp);});
-
   }
 
-  handleHit(state, event)
-  {
+  // handles what to do on if a player clicks "HIT" button
+  handleHit(state, event){
+    // if there are no more players
     if(state.token==0){return;}
 
     var cards = state.cards;
-    var cardDealt = cards[0];
+    var cardDealt = cards[0]; // card dealt from top of the deck
     var cardVal = cardDealt.character;
-    var source = "/css/"+cardVal+".png";
+    var source = "/css/"+cardVal+".png"; // the new card being dealt
     var playerID = state.token;
     var tP = state.tableProgress;
     var newscore = tP[playerID-1].score; // -1 because of indexing
@@ -236,13 +249,16 @@ class Blackjack extends React.Component {
 
     var tCount = state.tablePlayerCount;
 
+    // show new card to user
     $(".p"+playerID+"-cards").prepend($('<img>',{src:source, style: "width:3.5em"}));
 
+    // if the player is still in play
     if(tP[playerID - 1].inPlay == "yes"){
 
 
       state.tableMessages.push(this.userName+" called HIT");
-      //add the dealt cards
+
+      //add the dealt cards to players catalogue for showing on updates
       tP[playerID - 1].cardsDealt.push(cardDealt);
 
       // update score
@@ -257,10 +273,12 @@ class Blackjack extends React.Component {
 
     var gameover = true;
 
+    // remove the dealt card from top of the deck
     var updatedCards = cards.filter(function(card){
       return card.character != cardVal;
     });
 
+    // check if the player is busted
     if(newscore>21){
       $(".btns").hide();
       tP[playerID - 1].inPlay="no";
@@ -274,9 +292,10 @@ class Blackjack extends React.Component {
 
       gameover = this.updateToken(state);
 
+      // if there are two players left
+      // and one of them is Busted
+      // declare other as winner
       if(gameover == false){
-        // alert("You Win! GameOver!");
-        // location.replace("/lobby");
         this.handleWin(state);
         return;
       }
@@ -284,124 +303,103 @@ class Blackjack extends React.Component {
         flag="busted";
     }
 
+    // if score is 21, then player wins
     if(newscore==21){
       state.winner = this.userName;
       this.handleWin(state);
       return;
     }
 
+    // the new game state
+    var gm = ({ cards: updatedCards,
+            tableProgress: tP,
+            tablePlayerCount: tCount,
+            tableMessages: state.tableMessages,
+            token: state.token,
+            winner: state.winner,
+      });
 
-      var gm = ({ cards: updatedCards,
-              tableProgress: tP,
-              tablePlayerCount: tCount,
-              tableMessages: state.tableMessages,
-              token: state.token,
-              winner: state.winner,
-        });
+    if(flag != "busted"){
+      this.channel.push("update",{game: gm}).receive("ok",resp=>{
+        this.updateState(resp);});
+    }
 
-      //console.log(updatedCards);
-      if(flag != "busted"){
-        this.channel.push("update",{game: gm}).receive("ok",resp=>{
-          this.updateState(resp);});
-      }
-
-      //Update Scores
-      for(var i=1; i<8; i++)
-      {
-        $(".p"+i+"-scores").text(tP[i-1].score);
-      }
-
-
-      if(flag=="busted"){
-        alert("Busted! You Lose!!!");
-        //location.reload();
-      }
-
-      this.appendMessages(this.state);
+    //Update Scores of each player
+    for(var i=1; i<8; i++)
+    {
+      $(".p"+i+"-scores").text(tP[i-1].score);
+    }
 
 
+    if(flag=="busted"){
+      alert("Busted! You Lose!!!");
+    }
 
-    }//handleHIT() ends
+    this.appendMessages(this.state);
 
-    handleStay(state,event){
+  }//handleHIT() ends
 
-      //console.log(state.token);
+  // handles the flow when user clicks 'STAY' button
+  handleStay(state,event){
 
       state.tableMessages.push(this.userName+" called STAY");
 
-      //Hide Button initially
+      //Hide Buttons
       $(".btns").hide();
 
-      //console.log(state.tablePlayerCount);
-
-      //check if next player exists
+      // give token to next existing player
       this.updateToken(state);
 
       this.appendMessages(state);
 
-      //console.log(state.token);
+  }//handleStay() ends
 
-      //console.log("---"+state.token);
+  // updates token so that server knows to which player
+  // it should deal the next card
 
-      //this.channel.push("update",{game: this.state}).receive("ok",resp=>{});
+  updateToken(state){
 
-      //Show buttons if token equals user's Player ID
+    var nextPlayerID = state.token + 1;
 
+    var newToken;
+    var preventInfiniteCounter = 0;
 
-    }//handleStay() ends
+    // if token increments to more than 7
+    // then pass it to player-1 to form a cycle
+    if(nextPlayerID>7){
+      nextPlayerID=1;
+    }
 
-    updateToken(state){
+    // check if next player is in the game
+    // if yes then pass token to next player
+    // otherwise check for next possible player
+    // playing in the game
+    if(state.tableProgress[nextPlayerID - 1].inPlay == "yes"){
+      newToken = nextPlayerID;
+    }
+    else{
+      // to prevent the cycle from running infinite times
+      preventInfiniteCounter = 0;
 
-      var nextPlayerID = state.token + 1;
+      newToken = nextPlayerID;
 
-      var newToken;
-      var preventInfiniteCounter = 0;
+      // find next possible match to assign token
+      while(state.tableProgress[newToken - 1].inPlay == "no"
+      && preventInfiniteCounter<7){
 
-      if(nextPlayerID>7)
-      {
-        nextPlayerID=1;
-      }
-
-      if(state.tableProgress[nextPlayerID - 1].inPlay == "yes"){
-        // if(nextPlayerID>7)
-        // {
-        //   newToken=1;
-        //   while(state.tableProgress[newToken - 1].inPlay == "no"
-        //   && preventInfiniteCounter<7){
-        //     newToken = newToken + 1;
-        //     preventInfiniteCounter = preventInfiniteCounter+1;
-        //   }
-        // }
-        // else{
-
-        newToken = nextPlayerID;
-
-        //}
-      }
-      else{
-        preventInfiniteCounter = 0;
-        newToken = nextPlayerID;
-
-        while(state.tableProgress[newToken - 1].inPlay == "no"
-        && preventInfiniteCounter<7){
-
-          newToken = newToken + 1;
-          if(newToken>7){
-            newToken=1;
-          }
-          preventInfiniteCounter = preventInfiniteCounter+1;
-        }
-
-        // no players in play
-
-        if(preventInfiniteCounter==7)
-        {
-          // no Players in Play
+        newToken = newToken + 1;
+        if(newToken>7){
           newToken=1;
-          //alert("no players in play");
-          this.channel.push("reset").receive("ok",resp=>{this.updateState(resp);});
-          return false;
         }
+        preventInfiniteCounter = preventInfiniteCounter+1;
+      }
+
+      // no Players in Play
+      if(preventInfiniteCounter==7){
+        newToken=1;
+        this.channel.push("reset").receive("ok",resp=>{this.updateState(resp);});
+        return false;
+      }
     }
 
     // check if next player is the only player;
@@ -410,19 +408,21 @@ class Blackjack extends React.Component {
     var tC=0;
     var user;
     for(var i=0; i<7; i++){
-        if(state.tableProgress[i].userId != "" && state.tableProgress[i].inPlay == "yes"){
-          tC = tC+1;
-          user=i;
-        }
+      if(state.tableProgress[i].userId != "" && state.tableProgress[i].inPlay == "yes"){
+        tC = tC+1;
+        user=i;
+      }
     }
 
-    if(tC == 1)
-    {
+    // if there is only one player left
+    // then he is the winner
+    if(tC == 1){
       state.winner = state.tableProgress[user].userName;
-      //alert("Here");
       this.handleWin(state);
       return ;
     }
+
+    // the new game state
     var gm = ({ cards: state.cards,
             tableProgress: state.tableProgress,
             tablePlayerCount: state.tablePlayerCount,
@@ -436,15 +436,15 @@ class Blackjack extends React.Component {
       }
 
     this.setState(gm);
-    //console.log("--------"+gm.token);
+
     this.channel.push("update",{game: gm}).receive("ok",resp=>{this.updateState(resp);});
 
   }//updateToken Ends
 
+  // handles what to do on if a player clicks "Surrender" button
   handleQuit(state,event){
 
     var x = confirm("Are you sure? If yes, click OK");
-
 
     if(x){
       for(var i=0; i<7; i++){
@@ -457,9 +457,6 @@ class Blackjack extends React.Component {
           state.tableProgress[i].cardsDealt = [];
           state.tablePlayerCount = state.tablePlayerCount - 1;
 
-
-          //this.channel.push("update",{game: state}).receive("ok",resp=>{});
-
           this.updateToken(state);
 
           this.appendMessages(this.state);
@@ -470,6 +467,7 @@ class Blackjack extends React.Component {
     }
   }
 
+  // adds latest table events in the side bar
   appendMessages(state){
 
     $(".messageBoard").empty();
@@ -477,7 +475,6 @@ class Blackjack extends React.Component {
     for(var i=0; i<state.tableMessages.length; i++){
       $(".messageBoard").append($('<p>',{style:"color:black",text: " "+this.state.tableMessages[i]}));
     }
-
   }
 
   render(){
@@ -501,15 +498,16 @@ class Blackjack extends React.Component {
     );
   }
 
-}//class ends
+}//component ends
 
 
+// component within which cards are being displayed
 
 class CardsContainer extends React.Component {
 
   constructor(props) {
     super(props);
-  }//const ends
+  }
   render(){
     return(
       <div id="cardCon">
@@ -529,8 +527,6 @@ class CardsContainer extends React.Component {
         </div>
       </div>
     );
-  }//render
+  }
 
-
-
-} // CardsContainer ENds
+} // component ends

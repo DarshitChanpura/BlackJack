@@ -32,7 +32,6 @@ function init() {
   {
     let modal = document.getElementById('landing-modal');
     modal.style.display="none";
-    //alert(modal);
     if(modal)
     {
       setTimeout(function(){
@@ -60,26 +59,25 @@ $(init);
 $(init_join_game);
 $(init_observe_game);
 
+
 function init_observe_game(){
   if(!$(".observe_button")){return;}
   $(".observe-button").click(observe_game_click);
 }
 
+// handles the observe button click
 function observe_game_click(ev){
   let btn=$(ev.target);
   let table_id=btn.data("table-id");
-
   window.location.href="/game/"+table_id+"/spectator";
-
 }
 
 function init_join_game(){
   if(!$(".join_button")){return;}
   $(".join-button").click(join_game_click);
 }
-
-function join_game_click(ev)
-{
+// handles the join button click
+function join_game_click(ev){
   let btn=$(ev.target);
   let table_id=btn.data("table-id");
   let table_status=btn.data("table-status");
@@ -105,5 +103,4 @@ function join_game_click(ev)
     success: (resp) => {}
   });
   window.location.href="/game/"+table_id;
-
 }
