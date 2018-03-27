@@ -41,6 +41,7 @@ defmodule BlackjackWeb.GamesChannel do
       cards: payload["game"]["cards"],
       tablePlayerCount: payload["game"]["tablePlayerCount"],
       token: payload["game"]["token"],
+      winner: payload["game"]["winner"],
       tableProgress: payload["game"]["tableProgress"],
       tableMessages: payload["game"]["tableMessages"]
     };

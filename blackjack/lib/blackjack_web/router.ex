@@ -33,7 +33,7 @@ defmodule BlackjackWeb.Router do
     get "/lobby", PageController, :lobby
     post "/game/:table_id", PageController, :game
     get "/game/:table_id", PageController, :game
-    post "/tablesUpdate", TableController, :update
+    post "/tablesUpdate", TableController, :tableUpdate
     get "/game/:table_id/:spectator", PageController, :observeGame
 
     resources "/users", UserController

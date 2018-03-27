@@ -73,15 +73,13 @@ function init_observe_game(){
   $(".observe-button").click(observe_game_click);
 }
 
-function observe_game_click(ev)
-{
+function observe_game_click(ev){
   let btn=$(ev.target);
   let table_id=btn.data("table-id");
 
   window.location.href="/game/"+table_id+"/spectator";
 
 }
-
 
 function init_join_game(){
   if(!$(".join_button")){return;}
@@ -96,6 +94,23 @@ function join_game_click(ev)
   let table_playercount=btn.data("table-playercount");
 
   table_playercount=table_playercount + 1;
+
+
+  //Update Table in Database
+  // $.ajax("/tablesUpdate", {
+  //   method: "POST",
+  //   dataType: "json",
+  //   contentType: "application/json; charset=UTF-8",
+  //   data: t2,
+  //   success: (resp) => {alert("Updated");}
+  // });
+
+  // $.post("/tablesUpdate", t2,function(data,status){
+  //       alert("Data: " + data + "\nStatus: " + status);
+  //   });
+
+
+  //Go to games.html
   let text = JSON.stringify({
     table: {
       table_id: table_id,
@@ -103,25 +118,6 @@ function join_game_click(ev)
       table_playercount:  table_playercount
     }
   });
-
-  let t2 = JSON.stringify({
-    id: table_id,
-    table: {
-      table_id: table_id,
-      table_status: table_status,
-      table_playercount:  table_playercount
-    }
-  });
-  //Update Table in Database
-  $.ajax("/tablesUpdate", {
-    method: "POST",
-    dataType: "json",
-    contentType: "application/json; charset=UTF-8",
-    data: t2,
-    success: (resp) => {}
-  });
-
-
 
   let x=0;
   $.ajax("/game/" + table_id, {
@@ -132,6 +128,5 @@ function join_game_click(ev)
     success: (resp) => {}
   });
   window.location.href="/game/"+table_id;
-
-
+  
 }
