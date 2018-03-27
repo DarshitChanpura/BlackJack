@@ -1,11 +1,12 @@
+<div style="color:white;">
 <h2>Listing Tables</h2>
 
 <table class="table">
   <thead>
     <tr>
       <th>Tablename</th>
-      <th>Playercount</th>
-      <th>Status</th>
+      <!-- <th>Playercount</th>
+      <th>Status</th> -->
 
       <th></th>
     </tr>
@@ -14,11 +15,11 @@
 <%= for table <- @tables do %>
     <tr>
       <td><%= table.tableName %></td>
-      <td><%= table.playerCount %></td>
-      <td><%= table.status %></td>
+      <!-- <td><%= table.playerCount %></td>
+      <td><%= table.status %></td> -->
 
       <td class="text-right">
-        <span><%= link "Show", to: table_path(@conn, :show, table), class: "btn btn-default btn-xs" %></span>
+        <!-- <span><%= link "Show", to: table_path(@conn, :show, table), class: "btn btn-default btn-xs" %></span> -->
         <span><%= link "Edit", to: table_path(@conn, :edit, table), class: "btn btn-default btn-xs" %></span>
         <span><%= link "Delete", to: table_path(@conn, :delete, table), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
       </td>
@@ -26,5 +27,5 @@
 <% end %>
   </tbody>
 </table>
-
+</div>
 <span><%= link "New Table", to: table_path(@conn, :new) %></span>

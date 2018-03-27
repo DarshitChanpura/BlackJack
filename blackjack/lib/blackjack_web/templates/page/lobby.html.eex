@@ -7,18 +7,21 @@
   </div>
 
 
-  <h1>Table List</h1>
+  <h1 style="color:red;">Table List</h1>
+  <span><%= link "Create New Table", to: table_path(@conn, :new), class: "btn btn-warning",style: "color:white;margin-left:60em;margin-bottom: 1em;" %></span>
+  <!-- <button style="color:white;margin-left:60em;" class="btn btn-warning">Create Table</button -->
+
   <div class="table" style="background: black; border: 1px solid white;">
   <div class="row" style="border-bottom: 1px solid white;width:100%;margin-left:0px">
     <div class="col">
       <strong>TableName</strong>
     </div>
-    <div class="col">
+    <!-- <div class="col">
       <strong>PlayerCount</strong>
     </div>
     <div class="col">
       <strong>Status</strong>
-    </div>
+    </div> -->
     <div class="col">
     </div>
   </div>
@@ -27,12 +30,12 @@
     <div class="col">
       <%= table.tableName %>
     </div>
-    <div class="col">
+    <!-- <div class="col">
       <%= table.playerCount %>
     </div>
     <div class="col">
       <%= table.status %>
-    </div>
+    </div> -->
     <%= if table.playerCount < 7 do %>
     <div class="col" style="padding: 0.5em;">
             <button

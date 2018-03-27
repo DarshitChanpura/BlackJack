@@ -12,18 +12,18 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :playerCount, class: "control-label" %>
-    <%= number_input f, :playerCount, class: "form-control" %>
-    <%= error_tag f, :playerCount %>
+    <!-- <%= label f, :playerCount, class: "control-label" %> -->
+    <%= hidden_input f, :playerCount, class: "form-control", value: 2 %>
+    <!-- <%= error_tag f, :playerCount %> -->
   </div>
 
   <div class="form-group">
-    <%= label f, :status, class: "control-label" %>
+    <!-- <%= label f, :status, class: "control-label" %> -->
     <%= select f, :status, ["InProgress": "InProgress", "Idle": "Idle"], class: "dropdown" %>
-    <%= error_tag f, :status %>
+    <!-- <%= error_tag f, :status %> -->
   </div>
 
-  <div class="form-group">
+  <div class="form-group" align="center">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

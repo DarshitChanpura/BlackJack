@@ -36,6 +36,17 @@
   position: absolute;
 }
 
+.col{
+  margin-left: 1em;
+}
+.join-button{
+  margin-left: 17em;
+  display: inline-block;
+}
+.observe-button{
+  float:right;
+
+}
 .btns{
   margin-right:13em;
   float:right;
@@ -183,7 +194,13 @@
   background-color: black;
 }
 
+.table{
+  font-weight: 900;
+}
 
+.dropdown{
+  display:none;
+}
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */

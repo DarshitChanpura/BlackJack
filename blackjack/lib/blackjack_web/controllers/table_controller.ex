@@ -19,7 +19,7 @@ defmodule BlackjackWeb.TableController do
       {:ok, table} ->
         conn
         |> put_flash(:info, "Table created successfully.")
-        |> redirect(to: table_path(conn, :show, table))
+        |> redirect(to: page_path(conn, :lobby))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

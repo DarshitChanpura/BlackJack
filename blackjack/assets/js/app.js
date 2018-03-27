@@ -26,7 +26,7 @@ import socket from "./socket"
 import run_game from "./blackjack";
 
 function init() {
-  //$('#bodyImg').css("opacity", "0.8");
+
   //Modal jQuery for Landing page
   if(document.getElementById('landing-modal'))
   {
@@ -40,7 +40,7 @@ function init() {
       },1000);
     }
   }
-  ////////////////////////////////////////////////
+
   //Join Socket
   let root = document.getElementById('game');
   if(root){
@@ -48,17 +48,9 @@ function init() {
     let channel = socket.channel("games:" + window.tableId, {});
     let userId=user_id;
     let userName=user_name;
-    let spectator=spectator;
-    //alert(spectator);
+    let spectator=window.spectator;
     run_game(root,channel,userId,userName,spectator);
 
-    //$('#gameImg').css("width", "100em");
-  }
-  else{
-    // $("#joinGame").click(function() {
-    //   document.getElementById("gameLink").setAttribute("href", "/game/"+$("#playerName").val());
-    //
-    // });
   }
 
 }
@@ -95,21 +87,6 @@ function join_game_click(ev)
 
   table_playercount=table_playercount + 1;
 
-
-  //Update Table in Database
-  // $.ajax("/tablesUpdate", {
-  //   method: "POST",
-  //   dataType: "json",
-  //   contentType: "application/json; charset=UTF-8",
-  //   data: t2,
-  //   success: (resp) => {alert("Updated");}
-  // });
-
-  // $.post("/tablesUpdate", t2,function(data,status){
-  //       alert("Data: " + data + "\nStatus: " + status);
-  //   });
-
-
   //Go to games.html
   let text = JSON.stringify({
     table: {
@@ -128,5 +105,5 @@ function join_game_click(ev)
     success: (resp) => {}
   });
   window.location.href="/game/"+table_id;
-  
+
 }

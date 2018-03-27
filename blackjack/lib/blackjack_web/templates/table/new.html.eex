@@ -1,5 +1,8 @@
-<h2>New Table</h2>
+<div style="color:white;font-size: 25px;">
 
+<h2 align="center" style="color:red;">Create New Table</h2>
+<hr/>
 <%= render "form.html", Map.put(assigns, :action, table_path(@conn, :create)) %>
 
-<span><%= link "Back", to: table_path(@conn, :index) %></span>
+<span><%= link "Back", to: page_path(@conn, :lobby) %></span>
+</div>

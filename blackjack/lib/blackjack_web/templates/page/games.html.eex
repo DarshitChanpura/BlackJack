@@ -9,7 +9,6 @@
       window.tableId = "<%= @table_id %>";
       window.user_id = " <%= @current_user.id %> ";
       window.user_name = " <%= @current_user.name %> ";
-
       window.spectator = "<%= @spectator %>";
       </script>
 
