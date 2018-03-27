@@ -49,7 +49,7 @@ function init() {
     let userId=user_id;
     let userName=user_name;
     let spectator=spectator;
-    alert(spectator);
+    //alert(spectator);
     run_game(root,channel,userId,userName,spectator);
 
     //$('#gameImg').css("width", "100em");
