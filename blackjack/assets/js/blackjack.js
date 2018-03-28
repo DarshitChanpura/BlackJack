@@ -116,11 +116,11 @@ class Blackjack extends React.Component {
       st
     });
 
+    this.appendMessages(this.state);
     this.channel.push("update",{game: this.state}).receive("ok",resp=>{
        this.updateState(resp);});
 
     // updates table events
-    this.appendMessages(this.state);
 
     var cardsOfUser = [];
     var pId=0;
@@ -346,12 +346,12 @@ class Blackjack extends React.Component {
       $(".p"+i+"-scores").text(tP[i-1].score);
     }
 
+    this.appendMessages(this.state);
 
     if(flag=="busted"){
       alert("Busted! You Lose!!!");
     }
 
-    this.appendMessages(this.state);
 
   }//handleHIT() ends
 

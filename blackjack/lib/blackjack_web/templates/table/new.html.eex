@@ -4,5 +4,5 @@
 <hr/>
 <%= render "form.html", Map.put(assigns, :action, table_path(@conn, :create)) %>
 
-<span><%= link "Back", to: page_path(@conn, :lobby) %></span>
+<span><%= link "Back", to: page_path(@conn, :index) %></span>
 </div>

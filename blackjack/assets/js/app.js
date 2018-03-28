@@ -48,6 +48,7 @@ function init() {
     let userId=user_id;
     let userName=user_name;
     let spectator=window.spectator;
+
     run_game(root,channel,userId,userName,spectator);
 
   }
