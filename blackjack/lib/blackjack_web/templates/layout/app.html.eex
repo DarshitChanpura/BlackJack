@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Hello Blackjack!</title>
+  <title>Blackjack!</title>
   <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
 </head>
 
@@ -26,5 +26,8 @@
 
   </div> <!-- /container -->
   <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  <div id="footer">
+    <p>Developed by Darshit Chanpura, Abhishek Karan at Northeastern University</p>
+  </div>
 </body>
 </html>

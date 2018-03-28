@@ -2,15 +2,45 @@
 
 @import "bootstrap";
 
-.gameImg
-{
-  position:absolute;
-  background-image: url("./tableB.png");
-  height:38em;
-  width:100%;
-  background-repeat: no-repeat;
+#footer{
+  color: white;
+  font-variant: petite-caps;
+  font-size: 18px;
+  font-weight: bold;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  height: 28px;
+  background: cadetblue;
 }
 
+#game{
+  margin-left: -8em;
+}
+.gameImg
+{
+  background-image: url("./tableB.png");
+  height:40em;
+  width:106%;
+  background-repeat: no-repeat;
+  background-attachment: local;
+  overflow: hidden;
+  margin-left: -70px;
+}
+@media only screen and (max-width: 800px) {
+    .gameImg {
+        overflow:scroll;
+    }
+    .chatBoard{
+      float:left;
+      margin-left: 20px;
+    }
+    .messageBoard{
+      float:right;
+    }
+}
 .deckImg{
   width: 20em;
   height: 18em;
@@ -18,20 +48,44 @@
 }
 
 .messageBoard{
-  position: absolute;
-  float: right;
-  height: 500px;
-  width: 280px;
-  overflow: scroll;
+  height: 250px;
+  width: 300px;
   text-overflow: ellipsis;
-  margin-left: 70em;
+  background: lightgrey;
+  border-radius: 5px;
+  padding: 5px 11px;
+}
+.tableEvents{
+  margin-top: 1em;
+  min-height: 100px;
+  overflow-y: scroll;
+  font-size: 14px;
+}
+.messageboard-heading{
+  background: black;
+  text-align: center;
+}
+.chatBoard{
+  height: 350px;
+  width: 300px;
+  text-overflow: ellipsis;
   background: lightgrey;
   border-radius: 5px;
   padding: 5px 11px;
   font-size: 1em;
 }
+.chat-heading{
+  background: cadetblue;
+  color:black;
+  text-align: center;
+}
 
-
+#chat-messages {
+ margin-top: 1em;
+ min-height: 260px;
+ overflow-y: scroll;
+ color: black;
+}
 #quit-btn{
   margin-top: 4em;
   margin-left: 2em;
@@ -93,6 +147,7 @@
   position: absolute;
   margin-left: 50em;
   top: 18em;
+  width: 30%
 }
 
 .p2-names{

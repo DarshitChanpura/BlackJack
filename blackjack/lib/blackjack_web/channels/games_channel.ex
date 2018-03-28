@@ -53,6 +53,11 @@ defmodule BlackjackWeb.GamesChannel do
     {:noreply, socket}
   end
 
+  def handle_in("chats", payload, socket) do
+    user = Blackjack.Accounts.get_user!(payload["userId"])
+    broadcast! socket, "chats", %{userName: user.name, message: payload["message"]}
+    {:noreply, socket}
+  end
 
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (games:lobby).

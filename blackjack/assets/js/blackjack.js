@@ -18,6 +18,7 @@ class Blackjack extends React.Component {
     this.updateToken = this.updateToken.bind(this);
     this.appendMessages = this.appendMessages.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.updateChat = this.updateChat.bind(this);
     this.userId=props.userId;
     this.userName=props.userName;
     this.spectator=props.spectator;
@@ -44,6 +45,11 @@ class Blackjack extends React.Component {
       this.updateState(payload);
     });
 
+    this.channel.on("chats", payload=>
+    {
+      this.updateChat(payload.message, payload.userName);
+    });
+
     this.channel.on("reset", payload=>
       { let game = payload.game;
         this.setState(game);
@@ -56,6 +62,16 @@ class Blackjack extends React.Component {
   createState(state1){
 
     this.setState(state1.game);
+
+    // handle table chats
+    let newMsg = $("#message-input");
+    newMsg.focus();
+    newMsg.on('keypress', event => {
+        if(event.keyCode == 13) {
+          this.channel.push("chats", {userId: parseInt(this.userId), message: newMsg.val()})
+          newMsg.val("");
+        }
+      });
 
     var st = state1.game;
 
@@ -470,29 +486,60 @@ class Blackjack extends React.Component {
   // adds latest table events in the side bar
   appendMessages(state){
 
-    $(".messageBoard").empty();
+    $(".tableEvents").empty();
     var msgs = "";
     for(var i=0; i<state.tableMessages.length; i++){
-      $(".messageBoard").append($('<p>',{style:"color:black",text: " "+this.state.tableMessages[i]}));
+      $(".tableEvents").append($('<p>',{style:"color:black",text: " "+this.state.tableMessages[i]}));
     }
+  }
+
+  updateChat(msg,uName){
+
+    let newMsg = document.createElement("div");
+    let chatBoard = document.getElementById("chat-messages");
+    newMsg.innerHTML = `<i><b>${uName} </b></i>:
+                        ${msg}<br>`;
+    chatBoard.appendChild(newMsg);
+    chatBoard.scrollTop = chatBoard.scrollHeight;
   }
 
   render(){
     return(
-      <div>
-        <div className="gameImg">
-          <input type="submit" id="quit-btn" className="btn btn-danger" value="Surrender" onClick={(e) => this.handleQuit(this.state,e)} />
-          <img src="/css/deck.png" className="deckImg"/>
-          <div className="btns">
-            <input type="submit" id="hit-btn" className="btn btn-warning" value="HIT" onClick={(e) => this.handleHit(this.state,e)} />
-            &nbsp;&nbsp;&nbsp;
-            <input type="submit" id="stay-btn" className="btn btn-primary" value="STAY" onClick={(e) => this.handleStay(this.state,e)} />
-          </div>
-          <div className="players">
-            <CardsContainer channel={this.channel} state={this.state}/>
+      <div className="row">
+        <div className="col-md-10">
+          <div className="gameImg">
+            <input type="submit" id="quit-btn" className="btn btn-danger" value="Surrender" onClick={(e) => this.handleQuit(this.state,e)} />
+            <img src="/css/deck.png" className="deckImg"/>
+            <div className="btns">
+              <input type="submit" id="hit-btn" className="btn btn-warning" value="HIT" onClick={(e) => this.handleHit(this.state,e)} />
+              &nbsp;&nbsp;&nbsp;
+              <input type="submit" id="stay-btn" className="btn btn-primary" value="STAY" onClick={(e) => this.handleStay(this.state,e)} />
+            </div>
+            <div className="players">
+              <CardsContainer channel={this.channel} state={this.state}/>
+            </div>
           </div>
         </div>
-        <div className="messageBoard">
+        <div className="col-md-1">
+          <div className="chatBoard panel">
+            <div className="panel-heading chat-heading">
+              <i><strong>Chat Messages</strong></i>
+            </div>
+            <div id="chat-messages" className="panel-body">
+            </div>
+            <div className="panel-footer">
+              <input type="text" id="message-input" className="form-control"
+                          placeholder="Type a message…"/>
+            </div>
+          </div>
+          <br/>
+          <div className="messageBoard panel">
+            <div className="panel-heading messageboard-heading">
+              <i><strong>Table Events</strong></i>
+            </div>
+            <div className="tableEvents panel-body">
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -12,3 +12,6 @@ http://www.merkur-online-casino.xyz/diz/online-casino.jpg
 
 Table background:
 http://pharaohusa.com/wp-content/uploads/2017/09/blackjack-layout-4-green.png
+
+Chat:
+https://medium.com/@Stephanbv/elixir-phoenix-build-a-simple-chat-room-7f20ee8e8f9c

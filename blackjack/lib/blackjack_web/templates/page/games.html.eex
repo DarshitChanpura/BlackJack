@@ -1,4 +1,4 @@
-<div style="margin-left:55em;margin-top:2em;color:white;">
+<div style="margin-left:53em;margin-top:2em;color:white;">
   <%= if @current_user do %>
   Logged in as: <span style="color:red;"><%= @current_user.name %></span> | <%= link "Log Out", to: "/session", method: :delete %>
   <% end %>
@@ -15,7 +15,7 @@
     <!-- <div id="root">
       <p>React app not loaded...</p>
     </div> -->
-    <h4 style="margin-left:19em;"> Table : <%= @table_id %> </h4>
+    <h4 style="margin-left:8em;"> Table : <%= @table_id %> </h4>
     <div id="game">
       Loading...
     </div>
